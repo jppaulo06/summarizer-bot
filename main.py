@@ -21,6 +21,7 @@ if __name__ == "__main__":
     summarizer = Summarizer(os.getenv("SUMMARIZER"),
                             os.getenv("SUMMARIZER_KEY"))
 
-    messager = Messager()
+    messager = Messager(os.getenv("MESSAGER"), os.getenv("MESSAGER_KEY"))
+
     core = Core(reader, summarizer, messager)
     core.run()
