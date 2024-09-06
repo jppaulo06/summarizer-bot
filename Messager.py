@@ -135,6 +135,7 @@ class Messager(Port):
         self.adapter = self.__get_adapter(adapter, key)
 
     def run(self, message: str) -> None:
+        message = "[Resumo de E-mail]\n\n" + message
         self.adapter.run(message)
 
     def __get_adapter(self, adapter: str, key: str) -> MessagerAdapter:

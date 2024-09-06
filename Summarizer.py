@@ -22,7 +22,7 @@ class MaritacaAdapter(SummarizerAdapter):
 
     def run(self, message: str) -> str:
         response = self.model.generate(
-            f"Resuma o e-mail a seguir, não passando de 3 linhas. Responda em português brasileiro. \n{message}",
+            f"Resuma o e-mail a seguir, não passando de 10 linhas. Mencione inicialmente o assunto original do e-mail. Responda em português brasileiro. \n{message}",
             max_tokens=200)
 
         summary = response["answer"]
