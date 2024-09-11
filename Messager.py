@@ -1,4 +1,4 @@
-from lib import Port, Adapter
+from lib import Port, Adapter, print_debug
 import telebot
 from threading import Thread
 from enum import Enum
@@ -47,24 +47,27 @@ class TelegramAdapter(MessagerAdapter):
     def __init__(self, key: str) -> None:
         self.bot = telebot.TeleBot(key)
 
-        print("Telegram bot initialized")
+        print_debug("Telegram bot initialized")
 
         @self.bot.message_handler(commands=["start"])
         def start(message: telebot.types.Message):
-            print("Received start message")
+            print_debug("Received start message")
 
             response = """
 Olá!
-Sou um Bot de resumir e-mails do USPCodelab!
+
+*Sou um Bot de resumir e-mails do USPCodelab!*
+
 Para iniciar o resumo de um e-mail, envie a mensagem \
-"/summarize".
+```/summarize```. Caso deseje parar o resumo, envie \
+```/stop```.
             """
             self.contexts.append(self.Context(message.chat.id))
             self.bot.reply_to(message, response)
 
         @self.bot.message_handler(commands=["summarize"])
         def summarize(message: telebot.types.Message):
-            print("Received summarize message")
+            print_debug("Received summarize message")
 
             ctx = self.__get_context(message.chat.id)
 
@@ -82,7 +85,7 @@ Para iniciar o resumo de um e-mail, envie a mensagem \
 
         @self.bot.message_handler(commands=["stop"])
         def stop(message: telebot.types.Message):
-            print("Received stop message")
+            print_debug("Received stop message")
 
             ctx = self.__get_context(message.chat.id)
 

@@ -21,8 +21,24 @@ class MaritacaAdapter(SummarizerAdapter):
         self.model = maritalk.MariTalk(key=key, model=self.model_type)
 
     def run(self, message: str) -> str:
+        prompt = """
+Resuma o e-mail a seguir. Não passe de 10 linhas.
+
+Mencione inicialmente o assunto original do e-mail em negrito, por exemplo
+
+"*[assunto do e-mail original]*
+
+[Resumo do E-mail]
+"
+
+Responda sempre em português brasileiro.
+
+E-mail a ser resumido:
+
+\n{message}
+        """.format(message=message)
         response = self.model.generate(
-            f"Resuma o e-mail a seguir, não passando de 10 linhas. Mencione inicialmente o assunto original do e-mail. Responda em português brasileiro. \n{message}",
+            prompt,
             max_tokens=200)
 
         summary = response["answer"]
